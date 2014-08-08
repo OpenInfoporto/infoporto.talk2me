@@ -1,0 +1,27 @@
+<dl class="portlet portletquickMsg"
+    i18n:domain="infoporto.talk2me">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <span>
+           Parla con me
+        </span>
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <dd class="portletItem odd">
+    <input type="text" placeholder="Oggetto" /><br />
+    <textarea rows="3" placeholder="Messaggio"></textarea><br />
+    <button>Send </button>
+    
+    </dd>
+
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        <span>
+           Footer
+        </span>
+        <span class="portletBottomRight"></span>
+    </dd>
+
+</dl>

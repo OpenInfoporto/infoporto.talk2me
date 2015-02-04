@@ -52,6 +52,14 @@ def test_suite():
 
         # -*- extra stuff goes here -*-
 
+        # Integration tests for Mailbox
+        ztc.ZopeDocFileSuite(
+            'Mailbox.txt',
+            package='infoporto.talk2me',
+            optionflags = OPTION_FLAGS,
+            test_class=TestCase),
+
+
         # Integration tests for instantmsg
         ztc.ZopeDocFileSuite(
             'instantmsg.txt',

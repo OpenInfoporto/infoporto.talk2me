@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="infoporto.talk2me">
+<body>
+
+<metal:main fill-slot="content-core">
+  <metal:content-core define-macro="content-core">
+
+
+<form class="form-horizontal">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Mittente</label>
+    <div class="col-sm-10">
+      <span tal:content="context/author" />
+    </div>
+  </div>
+
+<!--
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Oggetto</label>
+    <div class="col-sm-10">
+      <span tal:content="context/subject" />
+    </div>
+  </div>
+-->
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Messaggio</label>
+    <div class="col-sm-10">
+      <span tal:content="context/body" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Data ricezione</label>
+    <div class="col-sm-10">
+      <span tal:content="context/creation_date" />
+    </div>
+  </div>
+
+</form>
+
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

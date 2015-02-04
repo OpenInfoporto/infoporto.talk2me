@@ -20,6 +20,11 @@ from plone.formwidget.contenttree import ObjPathSourceBinder
 
 from infoporto.talk2me import MessageFactory as _
 
+from Products.Five import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from plone import api
+import datetime
+
 
 # Interface class; used to define content-type schema.
 
@@ -27,14 +32,37 @@ class Iinstantmsg(form.Schema, IImageScaleTraversable):
     """
     Represent a single exchanged message
     """
+    
+    subject = schema.TextLine(
+            title=_(u"Oggetto"),
+        )
 
-    # If you want a schema-defined interface, delete the model.load
-    # line below and delete the matching file in the models sub-directory.
-    # If you want a model-based interface, edit
-    # models/instantmsg.xml to define the content type.
+    body = schema.Text(
+            title=_(u"Messaggio"),
+        )
 
-    form.model("models/instantmsg.xml")
+    author = schema.TextLine(
+            title=_(u"Mittente")
+        )
 
+    recipient = schema.TextLine(
+            title=_(u"Destinatario")
+        )
+
+    unread = schema.Bool(
+            title=_(u"Non letto"),
+            default=True
+        )
+
+    creation_date = schema.Datetime(
+            title=_(u"Data ricezione"),
+            default=datetime.datetime.now()
+        )
+
+    read_date = schema.Datetime(
+            title=_(u"Letto il"),
+            required=False
+        )
 
 # Custom content-type class; objects created for this content type will
 # be instances of this class. Use this class to add content-type specific
@@ -58,12 +86,36 @@ class instantmsg(Item):
 # of this type by uncommenting the grok.name line below or by
 # changing the view class name and template filename to View / view.pt.
 
-class SampleView(grok.View):
+class View(grok.View):
     """ sample view class """
 
     grok.context(Iinstantmsg)
     grok.require('zope2.View')
 
-    # grok.name('view')
+    grok.name('view')
 
     # Add view methods here
+
+
+class SendMsg(BrowserView):
+
+    def __call__(self):
+        container = api.content.get(path='/archivio/messaggi/')
+        obj = api.content.create(
+            type='infoporto.talk2me.instantmsg',
+            title=self.request.subject,
+            subject=self.request.subject,
+            body=self.request.body,
+            author=api.user.get_current().getUserName(),
+            recipient=api.user.get_current().getUserName(),
+            container=container)
+
+        return "Sent."
+
+class CountUnreadMsg(BrowserView):
+    def __call__(self):
+        container = api.content.get(path='/archivio/messaggi/')
+        catalog = api.portal.get_tool(name='portal_catalog')
+        documents = catalog(portal_type='infoporto.talk2me.instantmsg')
+        return len(documents)
+

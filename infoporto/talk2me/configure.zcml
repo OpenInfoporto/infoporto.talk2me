@@ -36,6 +36,22 @@
 
   <!-- -*- extra stuff goes here -*- -->
 
+  <browser:page
+    name="send-msg"
+    for="*"
+    permission="zope2.View"
+    class=".instantmsg.SendMsg"
+    />
+
+  <browser:page
+    name="unread-msg"
+    for="*"
+    permission="zope2.View"
+    class=".instantmsg.CountUnreadMsg"
+    />
+
   <include package=".portlets" />
+
+    
   
 </configure>

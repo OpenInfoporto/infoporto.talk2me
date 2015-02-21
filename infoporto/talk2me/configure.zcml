@@ -47,11 +47,38 @@
     name="unread-msg"
     for="*"
     permission="zope2.View"
-    class=".instantmsg.CountUnreadMsg"
+    class=".mailbox.UnreadMsgs"
     />
+
+  <browser:page
+    name="compose-msg"
+    for="*"
+    permission="zope2.View"
+    class=".mailbox.ComposeView"
+    />
+
+  <browser:page
+    name="read-msg"
+    for="*"
+    permission="zope2.View"
+    class=".instantmsg.MarkAsRead"
+    />
+
+  <browser:page
+    name="sent-msg"
+    for="*"
+    permission="zope2.View"
+    class=".mailbox.SentMsgs"
+    />
+
+  <browser:page
+    name="inbox-msg"
+    for="*"
+    permission="zope2.View"
+    class=".mailbox.IncomingMsgs"
+    />
+
 
   <include package=".portlets" />
 
-    
-  
 </configure>

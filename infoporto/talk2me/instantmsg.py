@@ -94,20 +94,24 @@ class View(grok.View):
 
     grok.name('view')
 
-    # Add view methods here
-
 
 class SendMsg(BrowserView):
 
     def __call__(self):
         container = api.content.get(path='/archivio/messaggi/')
+
+        if not self.request.recipient:
+            recipient = 'admin'
+        else:
+            recipient = self.request.recipient
+
         obj = api.content.create(
             type='infoporto.talk2me.instantmsg',
             title=self.request.subject,
             subject=self.request.subject,
             body=self.request.body,
             author=api.user.get_current().getUserName(),
-            recipient=api.user.get_current().getUserName(),
+            recipient=recipient,
             container=container)
 
         return "Sent."
@@ -118,4 +122,11 @@ class CountUnreadMsg(BrowserView):
         catalog = api.portal.get_tool(name='portal_catalog')
         documents = catalog(portal_type='infoporto.talk2me.instantmsg')
         return len(documents)
+
+
+class MarkAsRead(BrowserView):
+    def __call__(self):
+        msg = api.content.get(UID=self.request.item)
+        msg.unread = False
+        return 'Letto.'
 

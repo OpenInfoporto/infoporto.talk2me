@@ -7,11 +7,6 @@
       i18n:domain="infoporto.talk2me">
 <body>
 
-<tal:comment tal:condition="nothing">
-    This is a sample view template. It will not be used for rendering the
-    content unless activated by creation of a view class with a matching name.
-</tal:comment>
-
 <metal:main fill-slot="content-core">
   <metal:content-core define-macro="content-core">
 
@@ -19,18 +14,18 @@
     <table class="table table-striped">
         <tr>
             <th></th>
-            <th>Mittente</th>
+            <th>Destinatario</th>
             <th>Oggetto</th>
-            <th>Data ricezione</th>
+            <th>Data invio</th>
             <th></th>
         </tr>
         <tal:block tal:repeat="msg view/getMyMessages">
         <tr>
-            <td>        
+            <td>
                 <span tal:condition="msg/unread" style="color: red">&bull;</span>
             </td>
-            <td tal:content="msg/author"></td>
-            <td> <a tal:attributes="href msg/absolute_url" tal:content="msg/Title"></a></td>
+            <td tal:content="msg/recipient"></td>
+            <td><a tal:attributes="href msg/absolute_url" tal:content="msg/Title"></a></td>
             <td tal:content="python:here.toLocalizedTime(msg.creation_date)"></td>
             <td>
                <a tal:attributes="href msg/absolute_url" class="btn btn-info btn-xs">Leggi</a>
@@ -45,4 +40,3 @@
 
 </body>
 </html>
-

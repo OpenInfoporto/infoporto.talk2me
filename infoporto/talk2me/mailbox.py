@@ -20,6 +20,8 @@ from plone.formwidget.contenttree import ObjPathSourceBinder
 
 from infoporto.talk2me import MessageFactory as _
 from plone import api
+from Products.Five import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 
 # Interface class; used to define content-type schema.
@@ -71,4 +73,95 @@ class View(grok.View):
     def getMyMessages(self):
         catalog = api.portal.get_tool(name='portal_catalog')
         documents = catalog(portal_type='infoporto.talk2me.instantmsg', recipient=api.user.get_current().getUserName())
-        return [el.getObject() for el in documents]
+		
+		# filter for only my message
+        #import pdb; pdb.set_trace()
+        msgs = []
+        userGroups = []
+       
+        for gg in api.group.get_groups(username=api.user.get_current().getUserName()):
+            if gg:
+                userGroups.append(gg.getGroupName())
+
+        print userGroups
+        for dd in documents:
+            if dd.getObject().recipient in userGroups:
+                msgs.append(dd.getObject())
+
+        return msgs
+
+class ComposeView(BrowserView):
+    template = ViewPageTemplateFile('mailbox_templates/compose.pt')
+ 
+    def getRecipients(self):
+        groups = []
+        for gg in api.group.get_groups():
+            groups.append({'gname': gg.getGroupName()})
+            
+        return groups
+   
+    def __call__(self):
+        return self.template()
+
+
+class SentMsgs(BrowserView):
+    template = ViewPageTemplateFile('mailbox_templates/sent.pt')
+
+    # Add view methods here
+    def getMyMessages(self):
+        catalog = api.portal.get_tool(name='portal_catalog')
+        documents = catalog(portal_type='infoporto.talk2me.instantmsg', author=api.user.get_current().getUserName())
+
+        return [dd.getObject() for dd in documents]
+
+    def __call__(self):
+        return self.template()
+
+
+class UnreadMsgs(BrowserView):
+    
+    def __call__(self):
+        catalog = api.portal.get_tool(name='portal_catalog')
+        documents = catalog(portal_type='infoporto.talk2me.instantmsg', 
+                            unread=True)
+
+        msgs = []
+        userGroups = []
+    
+        for gg in api.group.get_groups(username=api.user.get_current().getUserName()):
+            if gg:
+                userGroups.append(gg.getGroupName())
+
+        print userGroups
+        for dd in documents:
+            if dd.getObject().recipient in userGroups:
+                msgs.append(dd.getObject())
+
+        return len(msgs)
+
+
+class IncomingMsgs(BrowserView):
+    template = ViewPageTemplateFile('mailbox_templates/incoming.pt')
+
+    # Add view methods here
+    def getMyMessages(self):
+        catalog = api.portal.get_tool(name='portal_catalog')
+        documents = catalog(portal_type='infoporto.talk2me.instantmsg', recipient=api.user.get_current().getUserName())
+
+        msgs = []
+        userGroups = []
+
+        for gg in api.group.get_groups(username=api.user.get_current().getUserName()):
+            if gg:
+                userGroups.append(gg.getGroupName())
+
+        print userGroups
+        for dd in documents:
+            if dd.getObject().recipient in userGroups:
+                msgs.append(dd.getObject())
+
+        return msgs
+
+    def __call__(self):
+        return self.template()
+

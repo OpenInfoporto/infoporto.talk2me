@@ -19,4 +19,15 @@
       editview=".quickmsg.EditForm"
       />
 
+  <plone:portlet
+      name="infoporto.talk2me.portlets.mailBoxActions"
+      interface=".mailBoxActions.ImailBoxActions"
+      assignment=".mailBoxActions.Assignment"
+      view_permission="zope2.View"
+      edit_permission="cmf.ManagePortal"
+      renderer=".mailBoxActions.Renderer"
+      addview=".mailBoxActions.AddForm"
+      editview=".mailBoxActions.EditForm"
+      />
+
 </configure>

@@ -19,15 +19,6 @@
     </div>
   </div>
 
-<!--
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Oggetto</label>
-    <div class="col-sm-10">
-      <span tal:content="context/subject" />
-    </div>
-  </div>
--->
-
   <div class="form-group">
     <label class="col-sm-2 control-label">Messaggio</label>
     <div class="col-sm-10">
@@ -42,7 +33,47 @@
     </div>
   </div>
 
+  <div tal:condition="context/unread" id="result">
+    <a href="#" class="btn" id="read-btn" tal:attributes="data-item context/uuid">Marca come letto</a>
+  </div>
+
 </form>
+
+
+<h4 class="" onclick="$('#recipients-details').fadeToggle()">Dettaglio destinatari...</h4>
+<div id="recipients-details" style="display:none">
+    <!-- TODO: calcola lista --> 
+    <table class="table">
+        <tr>
+            <th>Utente</th>
+            <th>Conferma lettura</th>
+        </tr>
+        
+        <tr>
+            <td>test</td>
+            <td>1234</td>
+        </tr>
+    </table>
+
+</div>
+
+<script>
+    $('#read-btn').on('click', function(){
+
+        console.log('mark as read');
+
+     $.ajax({
+        type: "POST",
+        url: portal_url+'/@@read-msg',
+        data: {'item': $(this).data('item')},
+        success: function(data){
+            $('#result').html('Letto.');
+        }
+    });
+
+
+    })
+</script>
 
 
   </metal:content-core>

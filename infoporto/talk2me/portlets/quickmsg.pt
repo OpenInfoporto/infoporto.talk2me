@@ -53,4 +53,20 @@ $("#portlet-send-btn").on('click', function(e){
 
 </script>
 
+    <script>
+            jq = jQuery();
+
+            $(function(){
+                $('#messages').html('<a style="color: white;" href="@@inbox-msg">Messaggi <span class="badge" id="unread-num"></span></a>');
+                console.log('checking for messages...');
+
+                $.get( "@@unread-msg", function( data ) {
+                    $('#unread-num').html(data);
+                });
+
+            });
+
+    </script>
+
+
 </dl>

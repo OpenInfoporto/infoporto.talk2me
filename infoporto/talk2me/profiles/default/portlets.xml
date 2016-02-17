@@ -20,4 +20,12 @@
      i18n:attributes="title; description"
    />
 
+   <portlet
+     addview="infoporto.talk2me.portlets.notifications"
+     title="Notifications"
+     description=""
+     i18n:attributes="title"
+   />
+
+
 </portlets>

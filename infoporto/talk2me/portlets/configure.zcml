@@ -20,6 +20,18 @@
       />
 
   <plone:portlet
+      name="infoporto.talk2me.portlets.notifications"
+      interface=".notifications.INotifications"
+      assignment=".notifications.Assignment"
+      view_permission="zope2.View"
+      edit_permission="cmf.ManagePortal"
+      renderer=".notifications.Renderer"
+      addview=".notifications.AddForm"
+      editview=".notifications.EditForm"
+      />
+
+
+  <plone:portlet
       name="infoporto.talk2me.portlets.mailBoxActions"
       interface=".mailBoxActions.ImailBoxActions"
       assignment=".mailBoxActions.Assignment"

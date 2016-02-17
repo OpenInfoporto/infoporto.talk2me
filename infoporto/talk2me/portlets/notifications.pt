@@ -1,0 +1,40 @@
+<dl class="portlet portletquickMsg"
+    i18n:domain="infoporto.talk2me">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <span>
+           Notifiche
+        </span>
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <dd class="portletItem odd">
+        <div tal:define="n view/get_notifications">
+        <div class="notifications-total">
+            <div tal:content="n/totali" class="notifications-counter"/>
+            <div class="notifications-label">totali</div>
+        </div>
+
+        <div class="notifications-da_visualizzare">
+            <div tal:content="n/da_visualizzare" class="notifications-counter"/>
+            <div class="notifications-label">Da visualizzare</div>
+        </div>
+
+        <div class="notifications-da_approvare">
+            <div tal:content="n/da_approvare" class="notifications-counter"/>
+            <div class="notifications-label">Da approvare</div>
+        </div>
+
+
+        </div>
+    </dd>
+
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        <span>
+        </span>
+        <span class="portletBottomRight"></span>
+    </dd>
+
+</dl>

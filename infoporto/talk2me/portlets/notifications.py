@@ -71,7 +71,7 @@ class Renderer(base.Renderer):
         user = api.user.get_current()
         username = user.getMemberId()
 
-        hashed = hashlib.md5("%s_%s" % (username, SECRET)).hexdigest()
+        hashed = hashlib.md5("%s%s" % (username, SECRET)).hexdigest()
 
         req = urllib2.Request(HOST % (username, hashed))
         response = urllib2.urlopen(req)
